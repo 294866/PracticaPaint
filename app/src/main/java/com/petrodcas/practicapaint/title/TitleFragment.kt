@@ -16,7 +16,6 @@ class TitleFragment : Fragment() {
 
 
     private lateinit var binding: TitleFragmentBinding
-    private lateinit var viewModel: TitleViewModel
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +28,11 @@ class TitleFragment : Fragment() {
                                 false
         )
 
-        viewModel = ViewModelProvider(this).get(TitleViewModel::class.java)
-
-        binding.titleViewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
-
         binding.startButton.setOnClickListener {
             findNavController().navigate(R.id.action_titleFragment_to_canvasFragment)
         }
 
-            return binding.root
+        return binding.root
     }
 
 }
