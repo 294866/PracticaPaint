@@ -2,13 +2,13 @@
     <!-- Base application theme. -->
     <style name="Theme.PracticaPaint" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/primaryColor_dark</item>
+        <item name="colorPrimaryVariant">@color/primaryColorAlter_dark</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary_dark</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/colorSecondary_dark</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryAlter_dark</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary_dark</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

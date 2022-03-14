@@ -26,7 +26,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bottonGuideLine"
             app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
-            app:tint="@color/pure_blue"
+            app:tint="@color/little_animated_1"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageView
@@ -40,7 +40,7 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
             app:layout_constraintTop_toTopOf="@+id/topGuideLine"
-            app:tint="@color/pure_green" />
+            app:tint="@color/little_animated_2" />
 
         <ImageView
             android:id="@+id/paintbrush_imageview"
@@ -53,7 +53,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/splash_imageview"
             app:layout_constraintTop_toTopOf="@+id/splash_imageview"
-            app:tint="@color/pure_red" />
+            app:tint="@color/big_animated" />
 
         <TextView
             android:id="@+id/clickmeTextView"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:text="@string/click_me"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="?colorOnPrimary"
             android:textSize="48sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="161dp"

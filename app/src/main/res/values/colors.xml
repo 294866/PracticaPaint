@@ -10,13 +10,27 @@
     <color name="pure_green">#00FF00</color>
     <color name="pure_red">#FF0000</color>
     <color name="pure_blue">#0000FF</color>
+    <color name="little_animated_1">#337896</color>
+    <color name="little_animated_2">#0D5270</color>
+    <color name="big_animated">#043F58</color>
 
 
-    <color name="primaryColor_light">#3C7891</color>
-    <color name="primaryColorAlter_light">#165773</color>
-    <color name="colorOnPrimary_light">#EDF0F1</color>
-    <color name="colorSecondary_light">#EDF0F1</color>
-    <color name="colorSecondaryAlter_light">#87B1C4</color>
-    <color name="colorOnSecondary_light">#023247</color>
+
+    <!-- light theme -->
+    <!-- <color name="imgbutton_background_light">#F8FDFF</color> -->
+    <color name="primaryColor_light">#CDEAF7</color>
+    <color name="primaryColorAlter_light">#9DD0E6</color>
+    <color name="colorOnPrimary_light">#043F58</color>
+    <color name="colorSecondary_light">#498DAB</color>
+    <color name="colorSecondaryAlter_light">#F8FDFF</color>
+    <color name="colorOnSecondary_light">#498DAB</color>
+    <!-- dark theme -->
+    <!-- <color name="imgbutton_background_dark">#323638</color> -->
+    <color name="primaryColor_dark">#474C4F</color>
+    <color name="primaryColorAlter_dark">#2A2F32</color>
+    <color name="colorOnPrimary_dark">#FFFFFF</color>
+    <color name="colorSecondary_dark">#7C8082</color>
+    <color name="colorSecondaryAlter_dark">#15191C</color>
+    <color name="colorOnSecondary_dark">#7C8082</color>
 
 </resources>

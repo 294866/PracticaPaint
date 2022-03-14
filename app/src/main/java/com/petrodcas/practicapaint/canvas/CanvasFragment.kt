@@ -1,6 +1,8 @@
 package com.petrodcas.practicapaint.canvas
 
+import android.nfc.Tag
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,10 +32,13 @@ class CanvasFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, CanvasViewModelFactory(requireNotNull(context)))[CanvasViewModel::class.java]
 
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
 
         return binding.root
     }
+
+
 }

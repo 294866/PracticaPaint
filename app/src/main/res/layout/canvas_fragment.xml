@@ -43,7 +43,8 @@
                     android:layout_weight="0"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/outline_brush_black_48"
-                    app:tint="#C12525"
+                    app:tint="?colorOnPrimary"
+                    app:backgroundTint="?colorSecondaryVariant"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton
@@ -53,7 +54,8 @@
                     android:layout_weight="0"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/eraser_outline"
-                    app:tint="#C12525"
+                    app:tint="?colorOnPrimary"
+                    app:backgroundTint="?colorSecondaryVariant"
                     tools:ignore="SpeakableTextPresentCheck" />
 
 
@@ -64,7 +66,8 @@
                     android:layout_weight="0"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/outline_palette_black_48"
-                    app:tint="#9C27B0"
+                    app:tint="?colorOnPrimary"
+                    app:backgroundTint="?colorSecondaryVariant"
                     tools:ignore="SpeakableTextPresentCheck" />
 
 
@@ -75,7 +78,8 @@
                     android:layout_weight="0"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/outline_crop_square_black_48"
-                    app:tint="#9C27B0"
+                    app:tint="?colorOnPrimary"
+                    app:backgroundTint="?colorSecondaryVariant"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton
@@ -85,7 +89,8 @@
                     android:layout_weight="0"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/outline_circle_black_48"
-                    app:tint="#C12525"
+                    app:tint="?colorOnPrimary"
+                    app:backgroundTint="?colorSecondaryVariant"
                     tools:ignore="SpeakableTextPresentCheck" />
 
 
@@ -96,7 +101,8 @@
                     android:layout_weight="0"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/outline_undo_black_48"
-                    app:tint="#9C27B0"
+                    app:tint="?colorOnPrimary"
+                    app:backgroundTint="?colorSecondaryVariant"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton
@@ -106,7 +112,8 @@
                     android:layout_weight="0"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/outline_redo_black_48"
-                    app:tint="#C12525"
+                    app:tint="?colorOnPrimary"
+                    app:backgroundTint="?colorSecondaryVariant"
                     tools:ignore="SpeakableTextPresentCheck" />
 
 
@@ -117,7 +124,8 @@
                     android:layout_weight="0"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/outline_format_color_fill_black_48"
-                    app:tint="#9C27B0"
+                    app:tint="?colorOnPrimary"
+                    app:backgroundTint="?colorSecondaryVariant"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton
@@ -127,7 +135,8 @@
                     android:layout_weight="0"
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/outline_delete_outline_black_48"
-                    app:tint="#C12525"
+                    app:tint="?colorOnPrimary"
+                    app:backgroundTint="?colorSecondaryVariant"
                     tools:ignore="SpeakableTextPresentCheck" />
 
             </LinearLayout>
@@ -138,6 +147,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?colorPrimaryVariant"
+            android:paddingTop="5dp"
             app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -161,6 +171,8 @@
                 android:layout_height="21dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:max="100"
+                android:min="1"
                 app:layout_constraintBottom_toBottomOf="@+id/fillButton"
                 app:layout_constraintEnd_toStartOf="@+id/fillButton"
                 app:layout_constraintStart_toStartOf="parent"
