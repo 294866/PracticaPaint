@@ -8,4 +8,5 @@
     <string name="eraser_button">Borrador</string>
     <string name="rectangle_button">Rectángulo</string>
     <string name="circle_button">Círculo</string>
+    <string name="click_me">¡Púlsame!</string>
 </resources>

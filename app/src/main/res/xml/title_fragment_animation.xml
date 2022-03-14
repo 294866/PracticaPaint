@@ -8,35 +8,62 @@
     <ConstraintSet android:id="@+id/start">
         <Constraint
             android:id="@+id/startButton"
-            motion:layout_constraintEnd_toStartOf="@id/guideline3"
+            motion:layout_constraintEnd_toStartOf="@id/rightGuideLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintStart_toStartOf="@+id/guideline2"
+            motion:layout_constraintStart_toStartOf="@id/leftGuideLine"
             android:visibility="invisible"
-            motion:layout_constraintBottom_toTopOf="@id/guideline5"
-            motion:layout_constraintTop_toBottomOf="@id/guideline4">
+            motion:layout_constraintBottom_toTopOf="@id/bottonGuideLine"
+            motion:layout_constraintTop_toBottomOf="@id/topGuideLine">
             <CustomAttribute
                 motion:attributeName="enabled"
                 motion:customBoolean="false" />
         </Constraint>
         <Constraint
             android:id="@+id/palette_and_brush_imageview"
-            motion:layout_constraintEnd_toStartOf="@+id/guideline3"
+            motion:layout_constraintEnd_toStartOf="@id/rightGuideLine"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            motion:layout_constraintBottom_toTopOf="@+id/guideline5"
-            motion:layout_constraintStart_toStartOf="@+id/guideline2" />
+            motion:layout_constraintBottom_toTopOf="@id/bottonGuideLine"
+            motion:layout_constraintStart_toStartOf="@id/leftGuideLine"
+            motion:transitionEasing="accelerate" />
+        <Constraint
+            android:id="@+id/splash_imageview"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            motion:layout_constraintTop_toTopOf="@id/topGuideLine"
+            motion:layout_constraintStart_toStartOf="@id/leftGuideLine"
+            android:layout_marginTop="32dp"
+            motion:transitionEasing="linear" />
+        <Constraint
+            android:id="@+id/paintbrush_imageview"
+            motion:layout_constraintEnd_toStartOf="@id/rightGuideLine"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="8dp"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintTop_toTopOf="@id/topGuideLine"
+            android:layout_marginTop="32dp" />
+        <Constraint
+            android:id="@+id/clickmeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintEnd_toEndOf="@+id/palette_and_brush_imageview"
+            motion:layout_constraintStart_toStartOf="@+id/palette_and_brush_imageview"
+            motion:layout_editor_absoluteY="495dp"
+            motion:layout_constraintBottom_toTopOf="@+id/palette_and_brush_imageview" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@+id/startButton"
-            motion:layout_constraintEnd_toStartOf="@+id/guideline3"
+            motion:layout_constraintEnd_toStartOf="@id/rightGuideLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toTopOf="@id/guideline5"
-            motion:layout_constraintTop_toBottomOf="@id/guideline4"
-            motion:layout_constraintStart_toStartOf="@+id/guideline2"
+            motion:layout_constraintBottom_toTopOf="@id/bottonGuideLine"
+            motion:layout_constraintTop_toBottomOf="@id/topGuideLine"
+            motion:layout_constraintStart_toStartOf="@id/leftGuideLine"
             android:visibility="visible"
             android:rotation="360">
             <CustomAttribute
@@ -45,20 +72,63 @@
         </Constraint>
         <Constraint
             android:id="@+id/palette_and_brush_imageview"
-            motion:layout_constraintEnd_toStartOf="@+id/guideline3"
+            motion:layout_constraintEnd_toStartOf="@id/rightGuideLine"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            motion:layout_constraintStart_toStartOf="@+id/guideline2"
+            motion:layout_constraintStart_toStartOf="@id/leftGuideLine"
             motion:layout_constraintHorizontal_bias="0.5"
             motion:layout_editor_absoluteY="0dp"
-            motion:layout_constraintTop_toBottomOf="@+id/guideline4" />
+            motion:layout_constraintTop_toBottomOf="@id/topGuideLine" />
+        <Constraint
+            android:id="@+id/splash_imageview"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            motion:layout_constraintBottom_toTopOf="@id/bottonGuideLine"
+            android:layout_marginBottom="32dp"
+            motion:layout_constraintEnd_toStartOf="@id/rightGuideLine"
+            android:layout_marginEnd="8dp" />
+        <Constraint
+            android:id="@+id/paintbrush_imageview"
+            motion:layout_constraintStart_toEndOf="@id/leftGuideLine"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            motion:layout_constraintBottom_toBottomOf="@id/bottonGuideLine"
+            android:layout_marginEnd="8dp"
+            motion:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="32dp" />
     </ConstraintSet>
     <Transition
         motion:constraintSetStart="@+id/start"
         motion:constraintSetEnd="@+id/end"
-        motion:duration="1000"
-        motion:autoTransition="none">
+        motion:duration="1300"
+        motion:autoTransition="none"
+        motion:pathMotionArc="startHorizontal">
         <KeyFrameSet >
+            <KeyAttribute
+                motion:motionTarget="@+id/startButton"
+                motion:framePosition="99" >
+                <CustomAttribute
+                    motion:customBoolean="false"
+                    motion:attributeName="enabled" />
+            </KeyAttribute>
+            <KeyAttribute
+                motion:motionTarget="@+id/startButton"
+                motion:framePosition="50"
+                android:rotation="0" />
+            <KeyPosition
+                motion:motionTarget="@+id/splash_imageview"
+                motion:framePosition="50"
+                motion:keyPositionType="pathRelative"
+                motion:percentY="0"
+                motion:percentX=".5" />
+            <KeyPosition
+                motion:motionTarget="@+id/paintbrush_imageview"
+                motion:framePosition="50"
+                motion:keyPositionType="pathRelative"
+                motion:percentY="0" />
             <KeyAttribute
                 motion:motionTarget="@+id/startButton"
                 motion:framePosition="100" >
@@ -67,11 +137,15 @@
                     motion:attributeName="enabled" />
             </KeyAttribute>
             <KeyAttribute
-                motion:motionTarget="@+id/startButton"
-                motion:framePosition="50"
-                android:rotation="0" />
+                motion:motionTarget="@+id/clickmeTextView"
+                motion:framePosition="1"
+                android:alpha="0" />
+            <KeyAttribute
+                motion:motionTarget="@+id/clickmeTextView"
+                motion:framePosition="100"
+                android:alpha="0" />
         </KeyFrameSet>
-        <OnClick />
+        <OnClick motion:targetId="@+id/palette_and_brush_imageview" />
     </Transition>
 
 </MotionScene>

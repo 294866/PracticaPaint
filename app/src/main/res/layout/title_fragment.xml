@@ -23,36 +23,49 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:src="@drawable/palette_and_brush"
-            app:layout_constraintBottom_toTopOf="@+id/guideline5"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:tint="@color/pure_blue" />
+            app:layout_constraintBottom_toTopOf="@+id/bottonGuideLine"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
+            app:tint="@color/pure_blue"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageView
             android:id="@+id/splash_imageview"
-            android:src="@drawable/ic_splash"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
+            android:src="@drawable/ic_splash"
             app:layout_constraintEnd_toStartOf="@+id/paintbrush_imageview"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/guideline4"
-            app:tint="@color/pure_green"/>
+            app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
+            app:layout_constraintTop_toTopOf="@+id/topGuideLine"
+            app:tint="@color/pure_green" />
 
         <ImageView
             android:id="@+id/paintbrush_imageview"
-            android:src="@drawable/paintbrush"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="8dp"
+            android:src="@drawable/paintbrush"
             app:layout_constraintBottom_toBottomOf="@+id/splash_imageview"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/splash_imageview"
             app:layout_constraintTop_toTopOf="@+id/splash_imageview"
-            app:tint="@color/pure_red"/>
+            app:tint="@color/pure_red" />
+
+        <TextView
+            android:id="@+id/clickmeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/click_me"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="161dp"
+            tools:layout_editor_absoluteY="581dp" />
 
         <Button
             android:id="@+id/startButton"
@@ -60,12 +73,12 @@
             android:layout_height="wrap_content"
             android:text="Button"
             app:layout_constraintBottom_toTopOf="@+id/palette_and_brush_imageview"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/rightGuideLine"
+            app:layout_constraintStart_toStartOf="@+id/leftGuideLine"
             app:layout_constraintTop_toBottomOf="@+id/splash_imageview" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
+            android:id="@+id/leftGuideLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -73,21 +86,21 @@
             app:layout_constraintGuide_percent=".1" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
+            android:id="@+id/rightGuideLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".9" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
+            android:id="@+id/topGuideLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent=".05" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline5"
+            android:id="@+id/bottonGuideLine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
