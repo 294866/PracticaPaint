@@ -4,46 +4,28 @@
 
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:motion="http://schemas.android.com/apk/res-auto">
-    <Transition
-        motion:constraintSetEnd="@+id/end"
-        motion:constraintSetStart="@id/start"
-        motion:duration="1000">
-        <KeyFrameSet>
-        </KeyFrameSet>
-    </Transition>
 
     <ConstraintSet android:id="@+id/start">
         <Constraint
             android:id="@+id/startButton"
-            motion:layout_constraintEnd_toStartOf="@+id/guideline3"
+            motion:layout_constraintEnd_toStartOf="@id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toTopOf="@+id/palette_and_brush_imageview"
-            motion:layout_constraintTop_toBottomOf="@+id/splash_imageview"
             motion:layout_constraintStart_toStartOf="@+id/guideline2"
-            android:visibility="invisible" >
+            android:visibility="invisible"
+            motion:layout_constraintBottom_toTopOf="@id/guideline5"
+            motion:layout_constraintTop_toBottomOf="@id/guideline4">
             <CustomAttribute
                 motion:attributeName="enabled"
                 motion:customBoolean="false" />
         </Constraint>
         <Constraint
-            android:id="@+id/startButton"
+            android:id="@+id/palette_and_brush_imageview"
             motion:layout_constraintEnd_toStartOf="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toTopOf="@+id/palette_and_brush_imageview"
-            motion:layout_constraintTop_toBottomOf="@+id/splash_imageview"
-            motion:layout_constraintStart_toStartOf="@+id/guideline2"
-            android:visibility="visible" />
-        <Constraint
-            android:id="@+id/startButton"
-            motion:layout_constraintEnd_toStartOf="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toTopOf="@+id/palette_and_brush_imageview"
-            motion:layout_constraintTop_toBottomOf="@+id/splash_imageview"
-            motion:layout_constraintStart_toStartOf="@+id/guideline2"
-            android:visibility="invisible" />
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            motion:layout_constraintBottom_toTopOf="@+id/guideline5"
+            motion:layout_constraintStart_toStartOf="@+id/guideline2" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -52,13 +34,44 @@
             motion:layout_constraintEnd_toStartOf="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toTopOf="@+id/palette_and_brush_imageview"
-            motion:layout_constraintTop_toBottomOf="@+id/splash_imageview"
+            motion:layout_constraintBottom_toTopOf="@id/guideline5"
+            motion:layout_constraintTop_toBottomOf="@id/guideline4"
             motion:layout_constraintStart_toStartOf="@+id/guideline2"
-            android:visibility="visible" >
+            android:visibility="visible"
+            android:rotation="360">
             <CustomAttribute
                 motion:attributeName="enabled"
                 motion:customBoolean="true" />
         </Constraint>
+        <Constraint
+            android:id="@+id/palette_and_brush_imageview"
+            motion:layout_constraintEnd_toStartOf="@+id/guideline3"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            motion:layout_constraintStart_toStartOf="@+id/guideline2"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_editor_absoluteY="0dp"
+            motion:layout_constraintTop_toBottomOf="@+id/guideline4" />
     </ConstraintSet>
+    <Transition
+        motion:constraintSetStart="@+id/start"
+        motion:constraintSetEnd="@+id/end"
+        motion:duration="1000"
+        motion:autoTransition="none">
+        <KeyFrameSet >
+            <KeyAttribute
+                motion:motionTarget="@+id/startButton"
+                motion:framePosition="100" >
+                <CustomAttribute
+                    motion:customBoolean="true"
+                    motion:attributeName="enabled" />
+            </KeyAttribute>
+            <KeyAttribute
+                motion:motionTarget="@+id/startButton"
+                motion:framePosition="50"
+                android:rotation="0" />
+        </KeyFrameSet>
+        <OnClick />
+    </Transition>
+
 </MotionScene>

@@ -22,12 +22,15 @@
             android:id="@+id/palette_and_brush_imageview"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:src="@drawable/palette_and_brush"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline2" />
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:tint="@color/pure_blue" />
 
         <ImageView
             android:id="@+id/splash_imageview"
+            android:src="@drawable/ic_splash"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
@@ -35,10 +38,12 @@
             app:layout_constraintEnd_toStartOf="@+id/paintbrush_imageview"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/guideline4" />
+            app:layout_constraintTop_toTopOf="@+id/guideline4"
+            app:tint="@color/pure_green"/>
 
         <ImageView
             android:id="@+id/paintbrush_imageview"
+            android:src="@drawable/paintbrush"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="8dp"
@@ -46,7 +51,8 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/splash_imageview"
-            app:layout_constraintTop_toTopOf="@+id/splash_imageview" />
+            app:layout_constraintTop_toTopOf="@+id/splash_imageview"
+            app:tint="@color/pure_red"/>
 
         <Button
             android:id="@+id/startButton"
