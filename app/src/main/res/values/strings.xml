@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PracticaPaint</string>
+    <string name="fill_button">Rellenar</string>
+    <string name="pen_size">Tamaño</string>
+    <string name="start_button">Comenzar</string>
+    <string name="clear_button">Limpiar</string>
+    <string name="brush_button">Pincel</string>
+    <string name="eraser_button">Borrador</string>
+    <string name="rectangle_button">Rectángulo</string>
+    <string name="circle_button">Círculo</string>
+</resources>

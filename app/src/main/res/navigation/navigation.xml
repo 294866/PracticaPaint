@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/titleFragment">
+
+    <fragment
+        android:id="@+id/titleFragment"
+        android:name="com.petrodcas.practicapaint.title.TitleFragment"
+        android:label="TitleFragment"
+        tools:layout="@layout/title_fragment">
+        <action
+            android:id="@+id/action_titleFragment_to_canvasFragment"
+            app:destination="@id/canvasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/canvasFragment"
+        android:name="com.petrodcas.practicapaint.canvas.CanvasFragment"
+        android:label="CanvasFragment"
+        tools:layout="@layout/canvas_fragment"/>
+
+</navigation>
