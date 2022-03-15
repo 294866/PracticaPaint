@@ -32,7 +32,7 @@ class CanvasFragment : Fragment() {
         )
 
 
-        viewModel = ViewModelProvider(this, CanvasViewModelFactory(requireNotNull(context)))[CanvasViewModel::class.java]
+        viewModel = ViewModelProvider(this, CanvasViewModelFactory())[CanvasViewModel::class.java]
 
 
         binding.viewModel = viewModel

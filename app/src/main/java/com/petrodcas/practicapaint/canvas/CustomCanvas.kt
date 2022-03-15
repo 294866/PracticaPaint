@@ -231,7 +231,7 @@ class CustomCanvas @JvmOverloads constructor(
             when (config.mode) {
                 Mode.BRUSH, Mode.ERASER -> drawLine(newX, newY)
                 Mode.RECTANGLE -> drawRectangle(newX, newY)
-                Mode.CIRCLE -> drawCircle(newX, newY)
+                Mode.CIRCLE -> drawOval(newX, newY)
                 else -> return //no se hace nada
             }
         }

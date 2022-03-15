@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CanvasViewModel(private val context: Context) : ViewModel() {
+class CanvasViewModel() : ViewModel() {
 
 
     private var canvas: CustomCanvas? = null
