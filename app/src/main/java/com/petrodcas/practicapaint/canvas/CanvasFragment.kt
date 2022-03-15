@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.petrodcas.practicapaint.R
 import com.petrodcas.practicapaint.databinding.CanvasFragmentBinding
+import vadiole.colorpicker.ColorModel
+import vadiole.colorpicker.ColorPickerDialog
 
 
 class CanvasFragment : Fragment() {
@@ -38,6 +40,30 @@ class CanvasFragment : Fragment() {
 
 
         return binding.root
+    }
+
+
+
+
+
+    private fun showColorPicker (initialColor: Int, colorFunction: (Int) -> Unit) {
+        val picker: ColorPickerDialog = ColorPickerDialog.Builder()
+            //  set initial (default) color
+            .setInitialColor(initialColor)
+            //  set Color Model. ARGB, RGB or HSV
+            .setColorModel(ColorModel.ARGB)
+            //  set is user be able to switch color model
+            .setColorModelSwitchEnabled(true)
+            //  set your localized string resource for OK button
+            .setButtonOkText(android.R.string.ok)
+            //  set your localized string resource for Cancel button
+            .setButtonCancelText(android.R.string.cancel)
+            //  callback for picked color (required)
+            .onColorSelected(colorFunction)
+            //  create dialog
+            .create()
+        //  show dialog from Fragment
+        picker.show(childFragmentManager, "color_picker")
     }
 
 

@@ -55,4 +55,7 @@ dependencies {
     //viewmodel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
+    //colorpicker
+    implementation 'io.github.vadiole:colorpicker:1.0.2'
+
 }
