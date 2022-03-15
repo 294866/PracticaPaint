@@ -9,6 +9,9 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.petrodcas.practicapaint.R
 import java.lang.Float.max
 import java.lang.Float.min
@@ -33,11 +36,11 @@ class CustomCanvas @JvmOverloads constructor(
         //Valores por defecto de la clase
         const val DEFAULT_BACKGROUND_COLOR = R.color.white
         const val DEFAULT_STROKE_COLOR = R.color.black
-        const val MIN_STROKE_WIDTH = 1f
-        const val MAX_STROKE_WIDTH = 255f
-        const val DEFAULT_STROKE_WIDTH = 30f
+        const val MIN_STROKE_WIDTH = 1
+        const val MAX_STROKE_WIDTH = 255
+        const val DEFAULT_STROKE_WIDTH = 30
         const val DEFAULT_FILL = false
-        val DEFAULT_MODE = Mode.RECTANGLE
+        val DEFAULT_MODE = Mode.BRUSH
     }
 
 
@@ -88,22 +91,48 @@ class CustomCanvas @JvmOverloads constructor(
     /** Flag para identificar si se dibujó algo y discriminar a los path vacíos de ser incluidos en el listado de dibujo */
     private var drawingDone: Boolean
 
+
+
+
+
+
+    /** Determina si la cola de deshacer está vacía. Esta propiedad debe ser importada desde el viewmodel. */
+    private lateinit var isEmptyUndoQueue : MutableLiveData<Boolean>
+    /** Determina si la cola de rehacer está vacía. Esta propiedad debe ser importada desde el viewmodel. */
+    private lateinit var isEmptyRedoQueue: MutableLiveData<Boolean>
+
+
+    /**
+     * Importa los LiveData del viewmodel para poder actualizar los datos en tiempo real del estado de las colas
+     * sin obtener referencia directa al viewmodel
+     */
+    fun bindEmptyQueues (emptyUndoQueue: MutableLiveData<Boolean>, emptyRedoQueue: MutableLiveData<Boolean>) {
+        isEmptyRedoQueue = emptyRedoQueue
+        isEmptyUndoQueue = emptyUndoQueue
+        isEmptyUndoQueue.value = config.undoQueue!!.isEmpty()
+        isEmptyRedoQueue.value = config.redoQueue!!.isEmpty()
+    }
+
+
     //constructor
     init {
         Log.d(":::INIT","Se ha creado un nuevo objeto...")
+
         //se inicializan los valores por defecto
         config = ConfigurationOptions(
             undoQueue = ArrayDeque(),
             redoQueue = ArrayDeque(),
-            strokeWidth = DEFAULT_STROKE_WIDTH,
+            strokeWidth = DEFAULT_STROKE_WIDTH.toFloat(),
             isFilled = DEFAULT_FILL,
             mode = DEFAULT_MODE,
             bgColor = context.getColor(DEFAULT_BACKGROUND_COLOR),
             strokeColor = context.getColor(DEFAULT_STROKE_COLOR)
         )
+
         //se inicializa la posición de las coordenadas de toque
         currentX = 0f
         currentY = 0f
+
         //se inicializa un nuevo paint que será reutilizado
         usedPaint = Paint().apply {
             color = config.strokeColor!!
@@ -116,6 +145,7 @@ class CustomCanvas @JvmOverloads constructor(
             strokeCap = Paint.Cap.ROUND // default: BUTT
             strokeWidth = config.strokeWidth!!// default: Hairline-width (really thin)
         }
+
         //se inicializa un nuevo Path que será reutilizado
         touchPath = Path()
         drawingDone = false
@@ -182,6 +212,7 @@ class CustomCanvas @JvmOverloads constructor(
         currentY = newY
     }
 
+
     /**
      * Gestiona qué ocurre cuando el usuario mueve el dedo (o lo que sea con que esté tocando la pantalla).
      *
@@ -198,22 +229,27 @@ class CustomCanvas @JvmOverloads constructor(
         if (deltaX >= touchTolerance || deltaY >= touchTolerance) {
             Log.d(":::onTouchMove", "Se ha superado la tolerancia")
             when (config.mode) {
-                Mode.BRUSH, Mode.ERASER -> {
-                    touchPath.quadTo(
-                        currentX,
-                        currentY,
-                        (currentX + newX)/2f,
-                        (currentY + newY)/2f
-                    )
-                    currentX = newX
-                    currentY = newY
-                    drawingDone = true
-                }
+                Mode.BRUSH, Mode.ERASER -> drawLine(newX, newY)
                 Mode.RECTANGLE -> drawRectangle(newX, newY)
                 Mode.CIRCLE -> drawCircle(newX, newY)
                 else -> return //no se hace nada
             }
         }
+    }
+
+
+
+    /** Dibuja una línea recta */
+    private fun drawLine (newX: Float, newY: Float) {
+        touchPath.quadTo(
+            currentX,
+            currentY,
+            (currentX + newX)/2f,
+            (currentY + newY)/2f
+        )
+        currentX = newX
+        currentY = newY
+        drawingDone = true
     }
 
 
@@ -244,7 +280,7 @@ class CustomCanvas @JvmOverloads constructor(
 
         val dx = abs(newX - currentX)
         val dy= abs(newY - currentY)
-        val radius = sqrt((dx*dx) + (dy*dy) ) / 2f
+        val radius = sqrt((dx*dx) + (dy*dy) )
 
         touchPath.addCircle(currentX, currentY, radius, Path.Direction.CW)
 
@@ -275,10 +311,11 @@ class CustomCanvas @JvmOverloads constructor(
     private fun onTouchEnd(newX: Float, newY: Float) {
         //si se dibujó algo, entonces añade un nuevo Action a la cola de cosas hechas
         if (drawingDone) {
-            config.undoQueue!!.addLast(generateActionFromConfig())
+            addToUndoQueue(generateActionFromConfig())
         }
         //limpia la cola de rehacer
         config.redoQueue!!.clear()
+        setIsEmptyRedoQueueValue(true)
         //restablece los valores de las coordenadas x e y actuales
         currentY = 0f
         currentX = 0f
@@ -321,6 +358,16 @@ class CustomCanvas @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Devuelve la configuración actual.
+     *
+     * @return [config]
+     */
+    fun getConfig () : ConfigurationOptions {
+        return this.config
+    }
+
+
 
     /**
      * Modifica el color del fondo y agrega un Action especial a la cola de deshacer.
@@ -333,11 +380,36 @@ class CustomCanvas @JvmOverloads constructor(
         config.mode = Mode.FILL_BG
         config.bgColor = newColor
         //se agrega una acción generada a la cola de deshacer
-        config.undoQueue!!.add(generateActionFromConfig(prevColor))
+        addToUndoQueue(generateActionFromConfig(prevColor))
         //se devuelve el estado del modo de la configuración al previo
         config.mode = prevMode
+        invalidate()
     }
 
+
+    /**
+     * Añade la acción a la cola de deshacer
+     */
+    private fun addToUndoQueue(a: Action) {
+        config.undoQueue!!.addLast(a)
+        setIsEmptyUndoQueueValue(false)
+    }
+
+    /**
+     * Añade la acción a la cola de rehacer
+     */
+    private fun addToRedoQueue(a: Action) {
+        config.redoQueue!!.addLast(a)
+        setIsEmptyRedoQueueValue(false)
+    }
+
+    private fun setIsEmptyUndoQueueValue (b: Boolean) {
+        if (isEmptyUndoQueue != null) isEmptyUndoQueue.value = b
+    }
+
+    private fun setIsEmptyRedoQueueValue (b: Boolean) {
+        if (isEmptyRedoQueue != null) isEmptyRedoQueue.value = b
+    }
 
     /**
      * Deshace una acción.
@@ -346,7 +418,15 @@ class CustomCanvas @JvmOverloads constructor(
      */
     fun undoAction () {
         if (config.undoQueue!!.isNotEmpty()) {
-            config.redoQueue!!.addLast(config.undoQueue!!.removeLast())
+            val action = config.undoQueue!!.removeLast()
+            addToRedoQueue(action)
+            setIsEmptyUndoQueueValue(config.undoQueue!!.isEmpty())
+            //si la acción extraida era pintar el fondo, lo gestiona
+            if (action.mode == Mode.FILL_BG) {
+                config.bgColor = action.prevBGColor
+            }
+
+            invalidate()
         }
     }
 
@@ -358,7 +438,15 @@ class CustomCanvas @JvmOverloads constructor(
      */
     fun redoAction() {
         if (config.redoQueue!!.isNotEmpty()) {
-            config.undoQueue!!.addLast(config.redoQueue!!.removeLast())
+            val action = config.redoQueue!!.removeLast()
+            addToUndoQueue(action)
+            setIsEmptyRedoQueueValue(config.redoQueue!!.isEmpty())
+            //si la acción a realizar era pintar el fondo, la gestiona
+            if (action.mode == Mode.FILL_BG) {
+                config.bgColor = action.strokeColor
+            }
+
+            invalidate()
         }
     }
 
@@ -370,6 +458,9 @@ class CustomCanvas @JvmOverloads constructor(
     fun clearDrawings() {
         config.undoQueue!!.clear()
         config.redoQueue!!.clear()
+        setIsEmptyUndoQueueValue(true)
+        setIsEmptyRedoQueueValue(true)
+        invalidate()
     }
 
 
@@ -382,8 +473,8 @@ class CustomCanvas @JvmOverloads constructor(
     private fun updatePaint (a: Action) {
 
         when (a.mode) {
-            Mode.BRUSH, Mode.CIRCLE, Mode.RECTANGLE -> updatePaintValues(a.strokeColor, a.strokeWidth, a.isFilled!!)
-
+            Mode.BRUSH -> updatePaintValues(a.strokeColor, a.strokeWidth)
+            Mode.CIRCLE, Mode.RECTANGLE -> updatePaintValues(a.strokeColor, a.strokeWidth, a.isFilled!!)
             Mode.ERASER -> updatePaintValues(config.bgColor, a.strokeWidth)
 
            else -> return
@@ -413,11 +504,12 @@ class CustomCanvas @JvmOverloads constructor(
      */
     private fun updatePaint (c: ConfigurationOptions = config) {
         when (c.mode) {
-            Mode.BRUSH, Mode.RECTANGLE, Mode.CIRCLE -> {
+            Mode.BRUSH -> updatePaintValues(c.strokeColor!!, c.strokeWidth!!)
+            Mode.RECTANGLE, Mode.CIRCLE -> {
                 updatePaintValues(c.strokeColor!!, c.strokeWidth!!, c.isFilled!!)
             }
             Mode.ERASER -> {
-                updatePaintValues(c.bgColor!!, c.strokeWidth!!, c.isFilled!!)
+                updatePaintValues(c.bgColor!!, c.strokeWidth!!)
             }
             else -> return //no es necesario hacer nada en el resto de casos
         }
@@ -474,7 +566,8 @@ class CustomCanvas @JvmOverloads constructor(
             Mode.FILL_BG -> {
                 Action(
                     strokeColor = config.bgColor,
-                    prevBGColor = oldBgColor
+                    prevBGColor = oldBgColor,
+                    mode = config.mode!!
                 )
             }
         }

@@ -1,11 +1,11 @@
 package com.petrodcas.practicapaint.canvas
 
-import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -38,6 +38,36 @@ class CanvasFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        //se asigna el nuevo canvas al modelview
+        viewModel.setCustomCanvas(binding.customCanvas)
+
+        //se asignan listeners a los botones de hacer/deshacer
+        binding.undoOptionButton.setOnClickListener{ viewModel.undoAction() }
+        binding.redoOptionButton.setOnClickListener{ viewModel.redoAction() }
+
+        //se asigna listener al botón de pintar el fondo
+        binding.tintBackgroundOption.setOnClickListener {
+            showColorPicker(viewModel.getBgColor()) { c -> viewModel.setBgColor(c) }
+        }
+
+        //se asigna listener al botón de seleccionar color
+        binding.colorpickerOptionButton.setOnClickListener {
+            showColorPicker(viewModel.getStrokeColor()) {c -> viewModel.setStrokeColor(c)}
+        }
+
+        //se asigna un listener a la barra deslizante de selección de tamaño
+        binding.penSizeSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
+                viewModel.setStrokeWidth(p1.toFloat())
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
+
+        //se asigna un listener al switch de elección de relleno
+        binding.fillButton.setOnCheckedChangeListener { _, b -> viewModel.setFillOption(b) }
 
         return binding.root
     }
@@ -45,15 +75,20 @@ class CanvasFragment : Fragment() {
 
 
 
-
+    /** Muestra un colorPicker acorde a los parámetros introducidos.
+     *
+     * @param initialColor color con el que se comienza la selección
+     * @param colorFunction función a realizar con el color seleccionado por el usuario
+     *
+     */
     private fun showColorPicker (initialColor: Int, colorFunction: (Int) -> Unit) {
         val picker: ColorPickerDialog = ColorPickerDialog.Builder()
             //  set initial (default) color
             .setInitialColor(initialColor)
             //  set Color Model. ARGB, RGB or HSV
-            .setColorModel(ColorModel.ARGB)
+            .setColorModel(ColorModel.RGB)
             //  set is user be able to switch color model
-            .setColorModelSwitchEnabled(true)
+            .setColorModelSwitchEnabled(false)
             //  set your localized string resource for OK button
             .setButtonOkText(android.R.string.ok)
             //  set your localized string resource for Cancel button
